@@ -1,1 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serve & Lead Society Certificate Portal</title>
 
+<style>
+
+:root{
+--blue:#029ade;
+--dark:#1c274b;
+}
+
+body{
+font-family:Arial;
+background:#f5f5f5;
+padding:20px;
+}
+
+.hero{
+max-width:900px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:12px;
+display:flex;
+gap:30px;
+align-items:center;
+}
+
+.hero img{
+width:250px;
+border-radius:10px;
+}
+
+.hero h1{
+color:var(--dark);
+}
+
+.container{
+max-width:500px;
+margin:30px auto;
+background:white;
+padding:30px;
+border-radius:12px;
+}
+
+select,input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+width:100%;
+padding:14px;
+background:var(--blue);
+border:none;
+color:white;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:var(--dark);
+}
+
+#preview{
+display:none;
+text-align:center;
+margin-top:20px;
+}
+
+#preview img{
+max-width:100%;
+border-radius:10px;
+border:2px solid #ddd;
+}
+
+.download{
+display:inline-block;
+margin-top:10px;
+background:green;
+color:white;
+padding:10px 20px;
+border-radius:6px;
+text-decoration:none;
+}
+
+.error{
+color:red;
+margin-top:10px;
+text-align:center;
+}
+
+.success{
+color:green;
+margin-top:10px;
+text-align:center;
+}
+
+</style>
+
+</head>
+<body>
+
+
+<div class="hero">
+
+<img src="cr21.jpg">
+
+<div>
+
+<h1>Serve & Lead Society</h1>
+
+<p>Certificate Verification Portal</p>
+
+</div>
+
+</div>
+
+
+<div class="container">
+
+<h2>Select Event</h2>
+
+<select id="event">
+
+<option value="">Select Event</option>
+
+<option value="orientation">Orientation Session</option>
+
+<option value="linkedin">LinkedIn Profile Development</option>
+
+<option value="skills">Skills Completion</option>
+
+<option value="service">Service Award</option>
+
+</select>
+
+
+<input type="text" id="id" placeholder="Membership ID">
+
+<input type="email" id="email" placeholder="Gmail Address">
+
+<input type="password" id="pass" placeholder="Password">
+
+
+<button onclick="verify()">Verify & Get Certificate</button>
+
+<div id="msg"></div>
+
+
+<div id="preview">
+
+<h3>Your Certificate</h3>
+
+<img id="certImg">
+
+<br>
+
+<a id="downloadBtn" class="download" download>Download Certificate</a>
+
+</div>
+
+</div>
+
+
+<script>
+
+
+// ===== MEMBERS DATABASE =====
+
+const MEMBERS={
+
+"2025-SLS-2345":{
+
+name:"Farooq12",
+
+email:"engrmfarooqahmad@gmail.com",
+
+pass:"1234",
+
+orientation:"PASTE_DRIVE_LINK",
+
+linkedin:"PASTE_DRIVE_LINK",
+
+skills:"PASTE_DRIVE_LINK",
+
+service:"PASTE_DRIVE_LINK"
+
+},
+
+"2025-SLS-0198":{
+
+name:"Saleem_Akhtar",
+
+email:"saleemmaitla1004@gmail.com",
+
+pass:"7029",
+
+orientation:"PASTE_DRIVE_LINK",
+
+linkedin:"PASTE_DRIVE_LINK",
+
+skills:"PASTE_DRIVE_LINK",
+
+service:"PASTE_DRIVE_LINK"
+
+}
+
+};
+
+
+// ===== VERIFICATION SYSTEM =====
+
+function verify(){
+
+let id=document.getElementById("id").value;
+
+let email=document.getElementById("email").value.toLowerCase();
+
+let pass=document.getElementById("pass").value;
+
+let event=document.getElementById("event").value;
+
+let msg=document.getElementById("msg");
+
+let user=MEMBERS[id];
+
+
+if(user && user.email.toLowerCase()==email && user.pass==pass){
+
+let cert=user[event];
+
+if(cert){
+
+document.getElementById("certImg").src=cert;
+
+document.getElementById("downloadBtn").href=cert;
+
+document.getElementById("preview").style.display="block";
+
+msg.innerHTML="<p class='success'>Verification Successful</p>";
+
+}
+
+else{
+
+msg.innerHTML="<p class='error'>Certificate not available for this event</p>";
+
+}
+
+}
+
+else{
+
+msg.innerHTML="<p class='error'>Invalid ID, Email or Password</p>";
+
+document.getElementById("preview").style.display="none";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
